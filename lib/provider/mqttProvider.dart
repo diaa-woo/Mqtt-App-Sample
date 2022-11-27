@@ -41,6 +41,7 @@ class MqttProvider extends ChangeNotifier {
         String joinUserNickName = _json["join"];
         if(_chatUserList.indexOf(joinUserNickName) < 0){
           _chatUserList.add(joinUserNickName);
+          print(_chatUserList);
         }
       }
       else{

@@ -37,13 +37,15 @@ class System extends StatelessWidget {
 class TestPage extends StatefulWidget {
   static const String path = "/test";
   final MqttProvider mqttProvider;
-  const TestPage({Key? key, required this.mqttProvider}) : super(key: key);
+  TestPage({Key? key, required this.mqttProvider}) : super(key: key);
 
   @override
   State<TestPage> createState() => _TestPageState();
 }
 
 class _TestPageState extends State<TestPage> {
+  TextEditingController tc = TextEditingController();
+  final FocusNode fn = FocusNode();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -53,10 +55,26 @@ class _TestPageState extends State<TestPage> {
             centerTitle: true,
           ),
           body: Center(
-            child: widget.mqttProvider.isLoad ? const Text("Loading!") : ElevatedButton(
-              child: const Text('Connect'),
-              onPressed: () async => await move(context),
-            ),
+            child: Column(
+              children: [
+                TextField(
+                  controller: tc,
+                ),
+                widget.mqttProvider.isLoad ? const Text("Loading!") : Row(
+                  children: [
+                    ElevatedButton(
+                      child: const Text('Connect'),
+                      onPressed: () async => await move(context),
+                    ),
+                    const SizedBox(width: 20),
+                    ElevatedButton(
+                      child: const Text('send'),
+                      onPressed: () => send(),
+                    )
+                  ],
+                )
+              ],
+            )
           ),
         )
     );
@@ -94,5 +112,12 @@ class _TestPageState extends State<TestPage> {
               )
       );
     }
+  }
+
+  void send(){
+    fn.unfocus();
+    if(tc.text.isEmpty) return;
+    widget.mqttProvider.sendChat(nickName: "test", chat: tc.text);
+    tc.clear();
   }
 }
