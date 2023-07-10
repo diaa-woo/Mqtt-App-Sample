@@ -20,10 +20,10 @@ class MqttRepo{
     }
   }
 
-  MqttServerClient client = MqttServerClient("10.37.0.5", "c")
-    ..port = 2500
+  MqttServerClient client = MqttServerClient("mqtt-dashboard.com", "c")
+    ..port = 8884
     ..setProtocolV311()
-    ..keepAlivePeriod = 20
+    ..keepAlivePeriod = 60
     ..onDisconnected = (){
       print("onDisconnected");
     }
