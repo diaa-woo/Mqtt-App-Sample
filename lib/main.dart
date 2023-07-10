@@ -59,6 +59,11 @@ class _TestPageState extends State<TestPage> {
               children: [
                 TextField(
                   controller: tc,
+            decoration: const InputDecoration(labelText: '출발지'),
+          ),
+          TextField(
+            controller: tc,
+            decoration: const InputDecoration(labelText: '도착지'),
                 ),
                 widget.mqttProvider.isLoad ? const Text("Loading!") : Row(
                   children: [
